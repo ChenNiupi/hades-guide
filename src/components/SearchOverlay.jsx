@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { gods, slotLabel } from "../data/gods";
 import { duos } from "../data/duos";
 import { guides } from "../data/guides";
+import { builds } from "../data/builds";
 import { weapons } from "../data/weapons";
 import GodIcon from "./GodIcon";
 import { ArrowIcon, CloseIcon, ScrollIcon, SearchIcon } from "./Icons";
 
-const TYPE_ORDER = ["神明", "祝福", "双重祝福", "武器", "攻略"];
+const TYPE_ORDER = ["神明", "祝福", "双重祝福", "武器", "构筑", "攻略"];
 
 export default function SearchOverlay({ open, onClose }) {
   const [query, setQuery] = useState("");
@@ -97,6 +98,20 @@ export default function SearchOverlay({ open, onClose }) {
         tone: "#e8c37a",
         sigil: null,
       })),
+      ...builds.map((build) => ({
+        type: "构筑",
+        id: `build-${build.id}`,
+        title: build.name,
+        subtitle: `${build.en} · ${build.gods
+          .map((id) => gods.find((god) => god.id === id)?.name)
+          .filter(Boolean)
+          .join(" + ")}`,
+        meta: `${build.weapon} · 难度 ${build.difficulty} · ${build.heat}`,
+        text: `${build.tagline} ${build.playstyle} ${build.core.join(" ")}`,
+        to: `/builds/${build.id}`,
+        tone: gods.find((god) => god.id === build.gods[0])?.color ?? "#e8c37a",
+        sigil: build.gods[0],
+      })),
     ],
     [],
   );
@@ -166,7 +181,7 @@ export default function SearchOverlay({ open, onClose }) {
       iconSrc: "/icons/weapons/sword.png",
     },
     { label: "新手开局", meta: "从 0 开始的前 10 次逃亡", to: "/guides/start-here", tone: "#65d9cf", sigil: "hermes" },
-    { label: "五套稳定构筑", meta: "直接抄作业", to: "/guides/five-builds", tone: "#ff9fc4", sigil: "aphrodite" },
+    { label: "五套推荐构筑", meta: "每套一份独立档案", to: "/builds", tone: "#ff9fc4", sigil: "aphrodite" },
   ];
 
   return (
@@ -187,7 +202,7 @@ export default function SearchOverlay({ open, onClose }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             onKeyDown={onInputKeyDown}
-            placeholder="搜索神明、祝福、双重祝福、武器或攻略…"
+            placeholder="搜索神明、祝福、双重祝福、构筑或攻略…"
             aria-label="搜索关键词"
           />
           <button className="icon-button" type="button" onClick={onClose} aria-label="关闭搜索">

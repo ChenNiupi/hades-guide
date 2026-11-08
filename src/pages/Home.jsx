@@ -273,7 +273,7 @@ export default function Home() {
             kicker="TONIGHT'S BUILDS"
             title="本夜推荐构筑"
             desc="不想从零研究？先照抄一套能稳定通关的，再慢慢改成自己的。"
-            action={{ to: "/guides/five-builds", label: "全部五套构筑" }}
+            action={{ to: "/builds", label: "全部五套构筑" }}
           />
           <div className="build-grid">
             {homeBuilds.map((build, index) => (

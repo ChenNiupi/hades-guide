@@ -214,8 +214,8 @@ function BuildCoreItem({ item }) {
 
 export function BuildCard({ build, gods, compact = false, index = 0 }) {
   const navigate = useNavigate();
-  const aspectPath = build.aspectPaths?.[0];
-  const target = aspectPath ? `/weapons#${aspectPath}` : null;
+  // 每套构筑都有独立档案页，整卡直达
+  const target = `/builds/${build.id}`;
 
   const handleCardActivate = (event) => {
     if (!target) return;
@@ -248,7 +248,7 @@ export function BuildCard({ build, gods, compact = false, index = 0 }) {
       onKeyDown={target ? handleCardKeyDown : undefined}
       role={target ? "link" : undefined}
       tabIndex={target ? 0 : undefined}
-      aria-label={target ? `${build.name}：查看对应武器形态与流派` : undefined}
+      aria-label={`${build.name}：查看这套构筑的完整档案`}
     >
       <div className="build-top">
         <div className="build-gods">
@@ -280,7 +280,7 @@ export function BuildCard({ build, gods, compact = false, index = 0 }) {
               <BuildCoreItem item={item} key={item} />
             ))}
           </ul>
-          <Link className="text-link" to={`/guides/five-builds#build-${build.id}`}>
+          <Link className="text-link" to={`/builds/${build.id}`}>
             查看完整思路
             <ArrowIcon />
           </Link>

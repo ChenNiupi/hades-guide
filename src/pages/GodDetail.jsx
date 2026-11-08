@@ -71,73 +71,84 @@ export default function GodDetail() {
     <div className="page god-detail" style={{ "--god": god.color, "--god-soft": god.colorSoft }}>
       <section className="god-hero">
         <div className="container">
-          <nav className="breadcrumb" aria-label="面包屑">
-            <Link to="/gods">诸神祝福</Link>
-            <ChevronIcon size={12} />
-            <span>{god.name}</span>
-          </nav>
+          <div className="god-hero-card panel">
+            <span className="god-hero-ghost" aria-hidden="true">
+              {god.en.toUpperCase()}
+            </span>
+            <span className="god-hero-frame" aria-hidden="true" />
+            <span className="god-hero-crown" aria-hidden="true" />
+            <nav className="breadcrumb" aria-label="面包屑">
+              <Link to="/gods">诸神祝福</Link>
+              <ChevronIcon size={12} />
+              <span>{god.name}</span>
+            </nav>
 
-          <div className="god-hero-grid">
-            <div className="god-hero-main">
-              <div className="god-identity">
-                <Medallion god={god} size={94} />
-                <div>
-                  <span className="kicker">
-                    {god.en.toUpperCase()} · {isChaos ? "PRIMORDIAL" : "OLYMPIAN"}
-                  </span>
-                  <h1>{god.name}</h1>
-                  <p className="god-epithet">
-                    {god.title} · {god.domain}
-                  </p>
+            <div className="god-hero-grid">
+              <div className="god-hero-main">
+                <div className="god-identity">
+                  <Medallion god={god} size={94} />
+                  <div>
+                    <span className="kicker">
+                      {god.en.toUpperCase()} · {isChaos ? "PRIMORDIAL" : "OLYMPIAN"}
+                    </span>
+                    <h1>{god.name}</h1>
+                    <p className="god-epithet">
+                      {god.title} · {god.domain}
+                    </p>
+                  </div>
+                </div>
+                <p className="god-lead">{god.tagline}</p>
+                <div className="tag-row">
+                  {god.tags.map((tag) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                  <span className="mini-chip">难度 {god.difficulty}</span>
+                </div>
+
+                <div className="god-stats">
+                  <div className="god-stat">
+                    <span>综合评级</span>
+                    <TierBadge tier={god.rating} />
+                  </div>
+                  <div className="god-stat">
+                    <span>上手难度</span>
+                    <strong>{god.difficulty}</strong>
+                  </div>
+                  <div className="god-stat">
+                    <span>核心祝福</span>
+                    <strong>
+                      {isChaos ? "诅咒 / 祝福成对" : `${boons.length} 条`}
+                    </strong>
+                  </div>
+                  <div className="god-stat">
+                    <span>双重祝福</span>
+                    <strong>
+                      {isChaos || god.id === "hermes" ? "不参与" : `${duos.length} 组`}
+                    </strong>
+                  </div>
+                  <Link className="text-link god-stats-link" to="/duos">
+                    查看全部双重祝福
+                    <ArrowIcon />
+                  </Link>
                 </div>
               </div>
-              <p className="god-lead">{god.tagline}</p>
-              <div className="tag-row">
-                {god.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-                <span className="mini-chip">难度 {god.difficulty}</span>
-              </div>
+
+              <figure className="god-portrait-card">
+                <img
+                  src={`/images/gods/${god.id}.png`}
+                  width="640"
+                  height="800"
+                  alt={`${god.name}官方立绘`}
+                  loading="eager"
+                  decoding="async"
+                />
+                <span className="portrait-vignette" aria-hidden="true" />
+                <figcaption className="portrait-caption plate">
+                  <span>官方立绘</span>
+                  <strong>{god.en}</strong>
+                </figcaption>
+              </figure>
             </div>
-
-            <figure className="god-portrait-card panel">
-              <img
-                src={`/images/gods/${god.id}.png`}
-                width="640"
-                height="800"
-                alt={`${god.name}官方立绘`}
-                loading="eager"
-                decoding="async"
-              />
-              <span className="portrait-shade" aria-hidden="true" />
-              <figcaption className="portrait-caption">
-                <span>官方立绘</span>
-                <strong>{god.en}</strong>
-              </figcaption>
-            </figure>
-
-            <aside className="god-facts panel">
-              <div className="fact-row">
-                <span>综合评级</span>
-                <TierBadge tier={god.rating} />
-              </div>
-              <div className="fact-row">
-                <span>上手难度</span>
-                <strong>{god.difficulty}</strong>
-              </div>
-              <div className="fact-row">
-                <span>核心祝福</span>
-                <strong>{isChaos ? "诅咒 / 祝福成对" : `${boons.length} 条`}</strong>
-              </div>
-              <div className="fact-row">
-                <span>双重祝福</span>
-                <strong>{isChaos || god.id === "hermes" ? "不参与" : `${duos.length} 组`}</strong>
-              </div>
-              <Link className="text-link" to="/duos">
-                查看全部双重祝福
-                <ArrowIcon />
-              </Link>
-            </aside>
           </div>
         </div>
       </section>
@@ -314,7 +325,7 @@ export default function GodDetail() {
                   看懂构筑底层
                   <ArrowIcon />
                 </Link>
-                <Link className="text-link subdued" to="/guides/five-builds">
+                <Link className="text-link subdued" to="/builds">
                   直接抄一套构筑
                 </Link>
               </div>

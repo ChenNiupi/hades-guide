@@ -8,6 +8,7 @@ const NAV = [
   { to: "/gods", label: "诸神祝福" },
   { to: "/duos", label: "双重祝福" },
   { to: "/weapons", label: "武器选择" },
+  { to: "/builds", label: "推荐构筑" },
   { to: "/guides", label: "攻略站" },
 ];
 
@@ -187,9 +188,18 @@ export default function Layout({ children }) {
             </div>
 
             <div className="footer-col">
+              <span className="footer-title">构筑</span>
+              <Link to="/builds">五套构筑总览</Link>
+              <Link to="/builds/sea-storm">雷海风暴</Link>
+              <Link to="/builds/merciful-end">仁慈解脱</Link>
+              <Link to="/builds/hunting-blades">狩猎之刃投弹</Link>
+              <Link to="/builds/hangover">酒爱战·醉酒流</Link>
+            </div>
+
+            <div className="footer-col">
               <span className="footer-title">攻略</span>
               <Link to="/guides/start-here">新手开局</Link>
-              <Link to="/guides/five-builds">五套构筑</Link>
+              <Link to="/guides/five-builds">五套构筑文章</Link>
               <Link to="/guides/bosses">Boss 攻略</Link>
               <Link to="/guides/heat">热度系统</Link>
             </div>

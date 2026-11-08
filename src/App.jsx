@@ -9,6 +9,8 @@ import Duos from "./pages/Duos";
 import Weapons from "./pages/Weapons";
 import Guides from "./pages/Guides";
 import GuideDetail from "./pages/GuideDetail";
+import Builds from "./pages/Builds";
+import BuildDetail from "./pages/BuildDetail";
 import NotFound from "./pages/NotFound";
 
 function ScrollToTop() {
@@ -35,6 +37,8 @@ export default function App() {
           <Route path="/weapons" element={<Weapons />} />
           <Route path="/guides" element={<Guides />} />
           <Route path="/guides/:guideId" element={<GuideDetail />} />
+          <Route path="/builds" element={<Builds />} />
+          <Route path="/builds/:buildId" element={<BuildDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

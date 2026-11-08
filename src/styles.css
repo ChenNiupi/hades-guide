@@ -1116,6 +1116,12 @@ svg {
   cursor: pointer;
 }
 
+/* 从首页点进来时，标出落点对应的那一套 */
+.build-card:target {
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 1px rgba(232, 195, 122, 0.16), 0 22px 46px rgba(0, 0, 0, 0.42);
+}
+
 .build-top {
   display: flex;
   align-items: flex-start;
@@ -1850,84 +1856,6 @@ svg {
 
 /* ============ God detail ============ */
 
-.god-hero {
-  position: relative;
-  overflow: hidden;
-  padding: 38px 0 50px;
-  border-bottom: 1px solid var(--line-soft);
-  background:
-    radial-gradient(800px 400px at 80% 10%, var(--god-soft), transparent 70%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
-}
-
-.god-portrait-card {
-  position: relative;
-  align-self: end;
-  width: 100%;
-  max-height: 390px;
-  aspect-ratio: 4 / 5;
-  margin: 0;
-  overflow: hidden;
-  border-color: color-mix(in srgb, var(--god) 34%, transparent);
-  background:
-    radial-gradient(120% 75% at 50% 100%, var(--god-soft), transparent 68%),
-    linear-gradient(180deg, rgba(24, 19, 32, 0.78), rgba(8, 7, 12, 0.95));
-  box-shadow:
-    0 26px 60px rgba(0, 0, 0, 0.45),
-    inset 0 0 50px rgba(0, 0, 0, 0.34);
-}
-
-.god-portrait-card img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-
-.portrait-shade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, transparent 54%, rgba(6, 5, 9, 0.9) 100%),
-    linear-gradient(
-      90deg,
-      rgba(6, 5, 9, 0.2),
-      transparent 18%,
-      transparent 82%,
-      rgba(6, 5, 9, 0.2)
-    );
-}
-
-.portrait-caption {
-  position: absolute;
-  right: 15px;
-  bottom: 12px;
-  left: 15px;
-  z-index: 1;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.portrait-caption span {
-  color: var(--faint);
-  font-size: 8.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.portrait-caption strong {
-  color: var(--gold);
-  font-family: var(--serif);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -1945,11 +1873,94 @@ svg {
   opacity: 0.6;
 }
 
+.god-hero {
+  position: relative;
+  padding: 30px 0 10px;
+}
+
+/* ---- Hero as one editorial "frontispiece" card ---- */
+
+.god-hero-card {
+  position: relative;
+  padding: 42px 48px 52px;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 460px at 78% -12%, var(--god-soft), transparent 62%),
+    radial-gradient(560px 300px at 4% 108%, color-mix(in srgb, var(--god) 10%, transparent), transparent 70%),
+    linear-gradient(160deg, rgba(30, 25, 40, 0.7), rgba(9, 8, 14, 0.94) 60%);
+  border-color: color-mix(in srgb, var(--god) 26%, var(--line));
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.god-hero-card::before,
+.god-hero-card::after {
+  width: 17px;
+  height: 17px;
+  border-color: color-mix(in srgb, var(--god) 46%, rgba(232, 195, 122, 0.42));
+  z-index: 3;
+}
+
+.god-hero-card .breadcrumb {
+  margin-bottom: 22px;
+}
+
+/* Inner hairline frame, inset from the card border like a book plate */
+.god-hero-frame {
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, rgba(232, 195, 122, 0.3), var(--god) 35%);
+  opacity: 0.55;
+  z-index: 2;
+}
+
+/* Halo medallion behind the identity block */
+.god-hero-crown {
+  position: absolute;
+  left: 108px;
+  top: 168px;
+  width: 170px;
+  height: 170px;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-22%, -26%);
+  background: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--god) 30%, transparent) 0%,
+    color-mix(in srgb, var(--god) 14%, transparent) 38%,
+    transparent 70%
+  );
+  filter: blur(4px);
+}
+
+/* Giant watermark of the god's English name, engraved under the ledger rule */
+.god-hero-ghost {
+  position: absolute;
+  left: 42px;
+  bottom: -38px;
+  z-index: 1;
+  pointer-events: none;
+  color: transparent;
+  font-family: var(--serif);
+  font-size: clamp(76px, 8vw, 124px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--god) 34%, transparent);
+  white-space: nowrap;
+  opacity: 0.38;
+  user-select: none;
+}
+
 .god-hero-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px 270px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   align-items: end;
-  gap: 28px;
+  gap: 44px;
 }
 
 .god-hero-main {
@@ -1984,34 +1995,135 @@ svg {
   line-height: 1.7;
 }
 
-.god-facts {
+/* ---- Portrait: museum double-frame plate ---- */
+
+.god-portrait-card {
+  position: relative;
+  align-self: end;
+  width: 100%;
+  max-height: 440px;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  padding: 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--god) 34%, transparent);
+  background:
+    radial-gradient(120% 75% at 50% 100%, var(--god-soft), transparent 68%),
+    linear-gradient(180deg, rgba(24, 19, 32, 0.78), rgba(8, 7, 12, 0.95));
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 50px rgba(0, 0, 0, 0.34);
+}
+
+.god-portrait-card::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  pointer-events: none;
+  border: 1px solid rgba(232, 195, 122, 0.22);
+  z-index: 2;
+}
+
+.god-portrait-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(1.06) contrast(1.04);
+}
+
+.portrait-vignette {
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(6, 5, 9, 0.55) 100%),
+    linear-gradient(180deg, transparent 62%, rgba(6, 5, 9, 0.88) 100%);
+}
+
+.portrait-caption {
+  position: absolute;
+  right: 15px;
+  bottom: 12px;
+  left: 15px;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.portrait-caption.plate {
+  right: auto;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  padding: 30px 18px 14px;
+  align-items: center;
+  background: linear-gradient(180deg, transparent, rgba(7, 6, 10, 0.82));
+}
+
+.portrait-caption.plate span {
+  color: color-mix(in srgb, var(--god) 70%, #cfc7bb);
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+}
+
+.portrait-caption.plate strong {
+  color: color-mix(in srgb, var(--god) 55%, #e3d9c6);
+  font-family: var(--serif);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ---- Facts folded into the identity column as a stat strip ---- */
+
+.god-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, auto)) 1fr;
+  align-items: center;
+  gap: 0 34px;
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 62%, var(--god) 38%);
+}
+
+.god-stat {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-self: stretch;
-  gap: 0;
-  padding: 22px;
+  gap: 6px;
+  min-width: 0;
 }
 
-.fact-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line-soft);
+.god-stat > span {
   color: var(--faint);
-  font-size: 11.5px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
 }
 
-.fact-row strong {
+.god-stat > strong {
   color: var(--ink);
-  font-size: 12px;
+  font-family: var(--serif);
+  font-size: 17px;
   font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
-.god-facts .text-link {
-  margin-top: 16px;
+.god-stat .tier {
+  align-self: flex-start;
+}
+
+.god-stats-link {
+  justify-self: end;
+  white-space: nowrap;
 }
 
 .detail-grid {
@@ -3919,8 +4031,8 @@ svg {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.6fr repeat(3, 0.7fr);
-  gap: 40px;
+  grid-template-columns: 1.5fr repeat(4, 0.68fr);
+  gap: 36px;
 }
 
 .footer-mark {
@@ -4117,36 +4229,43 @@ svg {
   }
 
   .god-hero-grid {
-    grid-template-columns: minmax(0, 1fr) 240px;
-    grid-template-areas:
-      "main portrait"
-      "facts facts";
+    grid-template-columns: minmax(0, 1fr) 250px;
     align-items: center;
-    gap: 24px;
+    gap: 28px;
   }
 
-  .god-hero-main {
-    grid-area: main;
-    align-self: center;
+  .god-hero-card {
+    padding: 28px 28px 32px;
   }
 
-  .god-facts {
-    grid-area: facts;
-    display: grid;
+  .god-hero-card::before,
+  .god-hero-card::after {
+    width: 13px;
+    height: 13px;
+  }
+
+  .god-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 24px;
-    align-self: stretch;
+    gap: 16px 28px;
+    max-width: none;
   }
 
-  .god-facts .text-link {
+  .god-stats-link {
     grid-column: 1 / -1;
+    justify-self: start;
   }
 
   .god-portrait-card {
-    grid-area: portrait;
-    width: 240px;
+    width: 250px;
     align-self: center;
     justify-self: end;
+  }
+
+  .god-hero-ghost {
+    right: -30px;
+    bottom: -20px;
+    font-size: 96px;
+    opacity: 0.35;
   }
 
   .article-grid {
@@ -4172,8 +4291,8 @@ svg {
   }
 
   .footer-top {
-    grid-template-columns: 1.4fr repeat(3, 0.8fr);
-    gap: 28px;
+    grid-template-columns: 1.2fr repeat(4, 0.8fr);
+    gap: 24px;
   }
 }
 
@@ -4469,11 +4588,11 @@ svg {
 
   .god-hero-grid {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "main"
-      "portrait"
-      "facts";
-    gap: 20px;
+    gap: 24px;
+  }
+
+  .god-hero-card {
+    padding: 24px 20px 28px;
   }
 
   .god-portrait-card {
@@ -4485,16 +4604,34 @@ svg {
     font-size: 46px;
   }
 
-  .god-facts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0;
-    padding: 20px;
+  .god-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 20px;
+    margin-top: 24px;
+    padding-top: 16px;
   }
 
-  .god-facts .text-link {
-    grid-column: auto;
+  .god-stat > strong {
+    font-size: 15px;
+  }
+
+  .god-stats-link {
+    justify-self: start;
+  }
+
+  .god-hero-ghost {
+    display: none;
+  }
+
+  .god-hero-frame {
+    inset: 8px;
+  }
+
+  .god-hero-crown {
+    top: 120px;
+    left: 60px;
+    width: 130px;
+    height: 130px;
   }
 
   .god-lead {
@@ -4918,3 +5055,563 @@ svg {
 .article-section-link {
   margin-top: 18px;
 }
+
+/* ============ Build dossier pages ============ */
+
+.build-hero .god-hero-card {
+  padding-bottom: 46px;
+}
+
+.build-hero-main h1 {
+  margin: 10px 0 4px;
+  font-size: clamp(38px, 4.6vw, 58px);
+  line-height: 1.12;
+}
+
+.build-hero-gods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 4px;
+}
+
+.build-hero-god {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 7px;
+  border: 1px solid color-mix(in srgb, var(--tone) 26%, var(--line));
+  background: rgba(255, 255, 255, 0.014);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.build-hero-god:hover {
+  border-color: color-mix(in srgb, var(--tone) 54%, var(--line));
+  background: color-mix(in srgb, var(--tone) 7%, transparent);
+}
+
+.build-hero-god > span {
+  display: grid;
+  gap: 1px;
+  line-height: 1.25;
+}
+
+.build-hero-god strong {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.build-hero-god small {
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.build-hero .god-hero-ghost {
+  bottom: -26px;
+  opacity: 0.16;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--god) 22%, transparent);
+}
+
+.build-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 62%, var(--god) 38%);
+}
+
+.build-stat {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.build-stat > span {
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.build-stat > strong {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+/* 右侧配方卡：页脚对齐到 hero 底边附近 */
+.build-recipe {
+  position: relative;
+  align-self: start;
+  padding: 22px;
+  border-color: color-mix(in srgb, var(--god) 24%, var(--line));
+  background: linear-gradient(165deg, rgba(28, 23, 38, 0.82), rgba(10, 9, 16, 0.88));
+}
+
+.build-recipe h3 {
+  margin: 8px 0 16px;
+  font-size: 18px;
+}
+
+.build-recipe dl {
+  display: grid;
+  gap: 13px;
+  margin: 0 0 16px;
+}
+
+.build-recipe dl > div {
+  display: grid;
+  gap: 3px;
+}
+
+.build-recipe dt {
+  color: var(--faint);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+}
+
+.build-recipe dd {
+  margin: 0;
+  color: #cfc7ba;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* 主区区块 */
+.build-block-section {
+  margin-top: 46px;
+}
+
+.build-block-section:first-of-type {
+  margin-top: 42px;
+}
+
+.section-lede {
+  margin: 10px 0 4px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+
+.build-core-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.build-core-card {
+  padding: 18px;
+  border-color: color-mix(in srgb, var(--tone) 20%, var(--line));
+}
+
+.build-core-card header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.build-core-card header > div {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.build-core-card header strong {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.build-core-card header small {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.build-core-card header em {
+  margin-left: auto;
+  color: var(--faint);
+  font-family: var(--serif);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.build-core-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.build-core-card li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.build-core-dot {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+
+.build-slot {
+  color: var(--faint);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+/* 成型顺序：编号时间线 */
+.route-steps {
+  display: grid;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route-steps li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding-bottom: 22px;
+}
+
+.route-steps li::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 27px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--line), transparent);
+}
+
+.route-steps li:last-child {
+  padding-bottom: 0;
+}
+
+.route-steps li:last-child::before {
+  display: none;
+}
+
+.route-step-no {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 26px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--gold-dim);
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.route-steps p {
+  margin: 0;
+  color: #c3bbae;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.build-tips-loose {
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.build-tips-loose li {
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.duo-grid-single {
+  grid-template-columns: 1fr;
+  margin-top: 16px;
+}
+
+/* 适配武器形态 */
+.build-aspect-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.build-aspect-card {
+  padding: 22px;
+}
+
+.build-aspect-card header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.build-aspect-card header > div {
+  min-width: 0;
+}
+
+.build-aspect-card header h3 {
+  margin: 4px 0 0;
+  font-size: 20px;
+}
+
+.build-aspect-card header .tier {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.build-aspect-official {
+  margin: 16px 0 10px;
+  color: #cdc5b8;
+  font-size: 12.5px;
+  line-height: 1.8;
+}
+
+.build-aspect-official span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--faint);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+}
+
+.build-aspect-play {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.85;
+}
+
+.build-aspect-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.build-aspect-boons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.build-aspect-boon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  background: none;
+  color: #b9b1a4;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.build-aspect-boon em {
+  color: var(--gold-dim);
+  font-size: 9.5px;
+  font-style: normal;
+}
+
+.build-aspect-boon:hover {
+  border-color: var(--line-strong);
+  color: var(--gold-bright);
+}
+
+.build-aspect-more {
+  font-size: 11.5px;
+}
+
+/* 侧栏构筑索引 */
+.side-build-list {
+  display: grid;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.side-build-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  font-size: 11.5px;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.side-build-list a:hover,
+.side-build-list a.is-active {
+  border-left-color: var(--gold-dim);
+  background: rgba(232, 195, 122, 0.05);
+  color: var(--gold);
+}
+
+.side-build-no {
+  color: var(--faint);
+  font-family: var(--serif);
+  font-size: 9.5px;
+}
+
+/* 总览页：横向对照表 */
+.build-compare {
+  margin-top: 44px;
+  padding: 26px;
+}
+
+.build-compare-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.build-compare-head h2 {
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.build-compare-scroll {
+  overflow-x: auto;
+}
+
+.build-compare-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.build-compare-table th {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--faint);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.build-compare-table td {
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.build-compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.build-compare-table tr:hover td {
+  background: rgba(232, 195, 122, 0.03);
+}
+
+.build-compare-name {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 14px;
+}
+
+.build-compare-name > span {
+  color: var(--faint);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.build-compare-table a:hover {
+  color: var(--gold);
+}
+
+.build-compare-gods {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.build-compare-gods .medallion + .medallion {
+  margin-left: -8px;
+}
+
+.build-compare-gods > span:last-child {
+  margin-left: 4px;
+}
+
+.build-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+@media (max-width: 1100px) {
+  .build-hero-main h1 {
+    font-size: clamp(34px, 4.4vw, 46px);
+  }
+
+  .build-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .build-recipe {
+    padding: 18px;
+  }
+
+  .build-core-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .build-hero-gods {
+    margin-top: 18px;
+  }
+
+  .build-hero-god {
+    padding: 5px 12px 5px 6px;
+  }
+
+  .build-aspect-card {
+    padding: 18px;
+  }
+
+  .build-compare {
+    padding: 18px;
+  }
+
+  .build-compare-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+

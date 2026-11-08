@@ -171,7 +171,7 @@ export default function Guides() {
                 <strong>看懂构筑</strong>
                 <small>槽位与状态</small>
               </Link>
-              <Link to="/guides/five-builds">
+              <Link to="/builds">
                 <span>03</span>
                 <strong>抄一套</strong>
                 <small>五套稳定构筑</small>

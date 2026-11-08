@@ -559,10 +559,7 @@ export default function Weapons() {
                         <b>推荐攻略</b>
                         <div>
                           {activeBuilds.map((build) => (
-                            <Link
-                              key={build.id}
-                              to={`/guides/five-builds#build-${build.id}`}
-                            >
+                            <Link key={build.id} to={`/builds/${build.id}`}>
                               {build.name}
                               <ArrowIcon />
                             </Link>
@@ -635,7 +632,7 @@ export default function Weapons() {
               <p>五套稳定构筑、武器速览与热度建议，都可以继续往下看。</p>
             </div>
             <div className="weapon-cta-links">
-              <Link className="button button-primary" to="/guides/five-builds">
+              <Link className="button button-primary" to="/builds">
                 查看五套构筑
                 <ArrowIcon />
               </Link>
